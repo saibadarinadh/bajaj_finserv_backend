@@ -26,9 +26,8 @@ app.post('/bfhl', (req, res) => {
         } else {
             alphabets.push(item);
             if (/^[a-z]$/.test(item)) {
-                const charCode = item.charCodeAt(0);
-                if (highestLowercaseAlphabet === null || charCode > highestLowercaseAlphabet) {
-                    highestLowercaseAlphabet = charCode;
+                if (!highestLowercaseAlphabet || item > highestLowercaseAlphabet) {
+                    highestLowercaseAlphabet = item;
                 }
             }
         }
@@ -37,9 +36,9 @@ app.post('/bfhl', (req, res) => {
     // Prepare response
     let response = {
         is_success: true,
-        user_id: 'Vecha Sai Badarinadh', // Replace with your full name and DOB in format ddmmyyyy
-        email: 'vechasaibadarinadhemail@.com', // Replace with your actual email
-        roll_number: '21BCE7084', // Replace with your actual roll number
+        user_id: 'Vecha Sai Badarinadh', // Your full name and DOB in format ddmmyyyy
+        email: 'vechasaibadarinadhemail@.com', // Your actual email
+        roll_number: '21BCE7084', // Your actual roll number
     };
 
     if (filter.includes('Numbers')) {
@@ -51,7 +50,7 @@ app.post('/bfhl', (req, res) => {
     }
 
     if (filter.includes('Highest lowercase alphabet')) {
-        response.HighestLowercaseAlphabet = highestLowercaseAlphabet ? String.fromCharCode(highestLowercaseAlphabet) : null;
+        response.HighestLowercaseAlphabet = highestLowercaseAlphabet ? highestLowercaseAlphabet : null;
     }
 
     console.log('Response:', response);
